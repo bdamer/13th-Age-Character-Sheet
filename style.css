@@ -1,0 +1,168 @@
+
+body {
+	font-family: monospace;
+	background-color: #000000;
+	padding: 0;
+	margin: 0;
+}
+
+table th {
+}
+
+table td {
+	background-color: #ffffff;
+	border: 1pt grey solid;
+}
+
+input, select {
+	border: 1pt grey solid;
+}
+
+input.number {
+	width: 20pt;
+}
+
+.warn {
+	color: #ff0000;
+}
+
+.left {
+	display: inline;
+}
+
+.right {
+	float: right;
+	text-align: right;
+}
+
+div#characterSheet {
+	margin-left: auto;
+	margin-right: auto;
+	width: 900px;
+	height: 1120px;
+	background-color: #ffffff;
+	padding: 5pt;
+	padding-left: 10pt;
+	padding-right: 10pt;
+}
+
+div#characterSheet h1 {
+	text-align: center;
+	border-bottom: 1px solid #000000;
+}
+
+div#characterHeader {
+	padding-bottom: 32px;	
+}
+
+div#characterHeader label {
+	width: 400px;
+	font-size: 14pt;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+div#characterHeader input[type="text"] {
+	width: 200px;
+}
+
+div#characterHeader select {
+	width: 140px;
+}
+
+div#characterStats {
+	height: 120px;
+	margin-bottom: 15px;
+}
+
+table#abilityScores {
+	float: left;
+	display: inline;
+	width: 30%;
+}
+
+div#characterStats td, div#characterStats input {
+	padding: 4pt;
+}
+
+table#abilityScores #mod2DEX {
+	border: 2pt black solid;
+}
+
+div#defenseStats {
+	padding-left: 15px;
+	float: left;
+	display: inline;
+	width: 8%;
+	padding-top: 2.5pt;
+}
+
+div#defenseStats label {
+	padding-right: 10px;
+	font-weight: bold;
+}
+
+table#attackStats {
+	float: left;
+	display: inline;
+	width: 30%;
+	padding-top: 2.5pt;
+}
+
+table#attackStats th, table#attackStats td {
+	width: 25%;
+}
+
+table#stats {
+	float: left;
+	display: inline;
+	width: 30%;
+}
+
+table#stats th {
+	width: 33%;
+}
+
+div#characterDetails span {
+	float: left;
+	display: inline;
+	width: 31%;
+	border: 1px solid #dddddd;
+	padding: 4pt;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+
+div#characterDetails label {
+	font-weight: bold;
+	margin-top: 0;
+}
+
+div#characterDetails input {
+	width: 98%;
+	border: 0px;
+	height: 25px;
+	border-bottom: 1px dotted #dddddd;	
+}
+
+div#abilityScoreWorksheet input[type="text"], div#abilityScoreWorksheet select{
+	margin: 0;
+	padding: 0;
+	font-size: 10pt;
+	width: 55px;
+	text-align: center;
+}
+
+div#actions a {
+	border: 1px solid #bbbbbb;
+	padding: 3pt;
+	margin-top: 2pt;
+	display: inline-block;
+	text-decoration: none;
+}
+
+div#actions label {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+}

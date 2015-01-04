@@ -1,0 +1,152 @@
+{
+   "BEST_SHOT":{
+      "label":"That's your best Shot? (Racial Power)",
+      "race":[
+         "DWARF"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "BREATH_WEAPON":{
+      "label":"Breath Weapon (Racial Power)",
+      "race":[
+         "DRAGONIC"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "CONFOUNDING":{
+      "label":"Confounding (Racial Power)",
+      "race":[
+         "GNOME"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "CRUEL":{
+      "label":"Cruel (Racial Power)",
+      "race":[
+         "DARK_ELF"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "CURSE_OF_CHAOS":{
+      "label":"Curse of Chaos (Racial Power)",
+      "race":[
+         "TIEFLING"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "ELVEN_GRACE":{
+      "label":"Elven Grace (Racial Power)",
+      "race":[
+         "WOOD_ELF"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "EVASIVE":{
+      "label":"Evasive (Racial Power)",
+      "race":[
+         "HALFLING"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "HERITAGE_OF_THE_SWORD":{
+      "label":"Adventurer Tier Elf Feat (Heritage of the Sword)",
+      "race":[
+         "DARK_ELF",
+         "HIGH_ELF",
+         "WOOD_ELF"
+      ],
+      "level":[
+         "ADVENTURER"
+      ]
+   },
+   "HIGHBLOOD_TELEPORT":{
+      "label":"Highblood Teleport (Racial Power)",
+      "race":[
+         "HIGH_ELF"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "HALO":{
+      "label":"Halo (Racial Power)",
+      "race":[
+         "AASIMAR"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "MINOR_ILLUSIONS":{
+      "label":"Minor Illusions (Racial Power)",
+      "race":[
+         "GNOME"
+      ],
+      "level":[
+         "RACIAL"
+      ]
+   },
+   "NEVER_SAY_DIE":{
+      "label":"Never Say Die (Racial Power)",
+      "race":[
+         "FORGEBORN"
+      ],
+      "level":[
+         "RACIAL",
+		 "CHAMPION"
+      ]
+   },
+   "LETHAL":{
+      "label":"Lethal (Racial Power)",
+      "race":[
+         "HALF_ORC"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "QUICK_TO_FIGHT":{
+      "label":"Quick to Fight (Racial Power)",
+      "race":[
+         "HUMAN"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
+   "SURPRISING":{
+      "label":"Surprising (Racial Power)",
+      "race":[
+         "HALF_ELF"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   }
+}

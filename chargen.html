@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>13th Age Character Sheet</title>
+	<link href="style.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="jquery.PrintArea.js"></script>
+	<script type="text/javascript" src="character.js"></script>
+ </head>
+<body>
+	
+<script type="text/javascript">
+
+var c = new Character();
+
+function updateCharacterSheet() {
+	c.computeStats();
+		
+	for (var i in DATA.ABILITIES) {
+		$("#score" + DATA.ABILITIES[i].label).html(c.getAbilityScoreTotal(i));
+		var m = c.modifiers[i];
+		$("#mod" + DATA.ABILITIES[i].label).html(m > 0 ? '+' + m : m);
+		m = c.modifiers[i] + c.level;
+		$("#mod2" + DATA.ABILITIES[i].label).html(m > 0 ? '+' + m : m);	
+	}
+
+	$("#ac").val(c.ac);
+	$("#pd").val(c.pd);
+	$("#md").val(c.md);
+	$("#hp").html(c.hp);	
+	$("#attackPenalty").html(c.attackPenalty);
+	$("#recoveries").html(c.recoveries);
+	var m = c.modifiers.CONSTITUTION;
+	$("#recoveryRoll").html(c.level + "D" + c.recoveryDice + (m >= 0 ? '+' + m : m));
+	
+	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
+	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");
+	
+	var adventurerFeats = Math.min(c.level, 4);
+	var championFeats = Math.max(Math.min(c.level - 4, 3), 0);
+	var epicFeats = Math.max(Math.min(c.level - 7, 3), 0);
+	// special case: Humans get extra adventurer feat
+	if (c.race == 'HUMAN') {
+		adventurerFeats++;
+	}
+	$("#featCount").html('Feats (A: ' + adventurerFeats + ' C: ' + championFeats + ' E: ' + epicFeats + ')');			
+}
+
+function initialize() {
+	for (var i in DATA.RACES) {
+		$("#race").append($("<option/>").val(i).text(DATA.RACES[i].label));
+	}
+	for (var i in DATA.CLASSES) {
+		$("#claz").append($("<option/>").val(i).text(DATA.CLASSES[i].label));
+	}
+	resetAbilityScores();
+	updateAbilityScores();
+	updateCharacterSheet();
+}
+
+function updateAbilityScores() {
+	var cost = 0;
+	for (var i = 1; i < 7; i++) {
+		var score = parseInt($("#score" + i).val());
+		if (isNaN(score))
+			continue;
+		
+		if (score == 18)
+			cost += 16;
+		else if (score == 17)
+			cost += 13;
+		else if (score == 16)
+			cost += 10;
+		else if (score == 15)
+			cost += 8;
+		else
+			cost += (score - 8);
+
+		var ability = $("#ability" + i).val();
+		if (!ability)
+			continue;
+		
+		c.setAbilityScore(ability, score);
+	}
+	
+	$("#scoreCost").html(cost + '/28');
+	if (cost > 28) {
+		$("#scoreCost").attr("class", "warn");
+	} else {
+		$("#scoreCost").attr("class", "");	
+	}
+}
+
+function resetAbilityScores(scores) {
+	scores = scores || [8, 8, 8, 8, 8, 8];
+
+	for (var i = 1; i < 7; i++) {
+		$("#score" + i).val(scores[i-1]);
+		$("#ability" + i).empty();
+		$("#ability" + i).append($("<option/>").val("").text("--"));				
+		var c = 1;
+		for (var j in DATA.ABILITIES) {
+			var el = $("<option/>").val(j).text(DATA.ABILITIES[j].label);
+			if (c == i) {
+				el.attr("selected", "selected");
+			}
+			$("#ability" + i).append(el);
+			c++;
+		}
+	}
+}
+
+function rollAbilityScores() {
+	var randScore = function() {
+		var s1 = Math.ceil(Math.random() * 6);
+		var s2 = Math.ceil(Math.random() * 6);
+		var s3 = Math.ceil(Math.random() * 6);
+		var s4 = Math.ceil(Math.random() * 6);
+		return (s1 + s2 + s3 + s4) - Math.min(s1, s2, s3, s4);		
+	};
+	
+	for (var i = 1; i < 7; i++) {
+		$("#score" + i).val(randScore());
+	}
+};
+
+$(document).ready(function() {
+	// first, load external data
+	DATA.load().done(initialize);
+	
+	// set up event logic
+	$("#name").change(function() {
+		c.name = $(this).val();
+	});
+	
+	$("#race").change(function() {
+		var idx = $(this).val();
+		$("#racialAbilityBonus").empty();
+		$("#racialAbilityBonus").append($("<option/>").val("").text("-Select Ability-"));				
+		if (idx === "") {
+			$("#racialAbilityBonus").attr("disabled", "disabled");
+			c.setRace(null);
+		} else {
+			for (var i in DATA.RACES[idx].bonus) {
+				var a = DATA.RACES[idx].bonus[i];
+				$("#racialAbilityBonus").append($("<option/>").val(a).text(DATA.ABILITIES[a].label));
+			}
+			$("#racialAbilityBonus").attr("disabled", null);
+			c.setRace(idx);
+		}
+		updateCharacterSheet();
+	});
+
+	$("#racialAbilityBonus").change(function() {
+		var ability = $(this).val();
+		if (ability == "") { 
+			c.setRacialAbilityBonus(null);
+		} else if (ability == c.clazAbilityBonus) {
+			alert("Please select different attributes for the racial and class bonus!");
+			$(this).val("");
+			c.setRacialAbilityBonus(null);
+		} else {
+			c.setRacialAbilityBonus(ability);			
+		}
+		updateCharacterSheet();
+	});
+	
+	$("#claz").change(function() {
+		var idx = $(this).val();
+		$("#clazAbilityBonus").empty();
+		$("#clazAbilityBonus").append($("<option/>").val("").text("-Select Ability-"));				
+		if (idx === "") {
+			$("#clazAbilityBonus").attr("disabled", "disabled");
+			c.setClaz(null);
+		} else {
+			for (var i in DATA.CLASSES[idx].bonus) {
+				var a = DATA.CLASSES[idx].bonus[i];
+				$("#clazAbilityBonus").append($("<option/>").val(a).text(DATA.ABILITIES[a].label));
+			}
+			$("#clazAbilityBonus").attr("disabled", null);
+			c.setClaz(idx);
+		}	
+		updateCharacterSheet();
+	});
+
+	$("#clazAbilityBonus").change(function() {
+		var ability = $(this).val();
+		if (ability == "") { 
+			c.setClazAbilityBonus(null);
+		} else if (ability == c.racialAbilityBonus) {
+			alert("Please select different attributes for the racial and class bonus!");
+			$(this).val("");
+			c.setClazAbilityBonus(null);
+		} else {
+			c.setClazAbilityBonus(ability);			
+		}
+		updateCharacterSheet();
+	});
+	
+	$("#level").change(function() {
+		var lvl = parseInt($(this).val());
+		if (isNaN(lvl)) {
+			lvl = 1;
+		}
+		c.level = lvl;
+		updateCharacterSheet();		
+	});
+	
+	$("#armorType").change(function() {
+		c.armorType = $(this).val();
+		updateCharacterSheet();
+	});
+	
+	$("#shield").change(function() {
+		c.hasShield = ($(this).val() == "1");
+		updateCharacterSheet();
+	});
+	
+	$("#resetScores").click(function(event) {
+		event.preventDefault();
+		resetAbilityScores();
+		updateAbilityScores();
+		updateCharacterSheet();		
+	});
+	
+	$("#rollScores").click(function(event) {
+		event.preventDefault();
+		rollAbilityScores();
+		updateAbilityScores();
+		updateCharacterSheet();		
+	});
+	
+	$("#abilityScoreWorksheet input").change(function() {
+		var val = parseInt($(this).val());
+		
+		if (isNaN(val)) {
+			$(this).val(8);
+		} else if (val < 8) {
+			$(this).val(8);
+		} else if (val > 18) {
+			$(this).val(18);
+		}
+		updateAbilityScores();
+		updateCharacterSheet();		
+	});
+	
+	$("#abilityScoreWorksheet select").change(function() {		
+		updateAbilityScores();
+		updateCharacterSheet();		
+	});	
+
+	$("#fileUpload").change(function(ev) {
+		var file = ev.target.files[0];
+		if (file) {
+			var r = new FileReader();
+			r.onload = function(e) {
+				if (file.type != "'text/json") {
+					alert("Invalid file type: " + file.type);
+				} else {
+					var data = JSON.parse(e.target.result);
+					
+					// update spreadsheet with data from file
+					$("#name").val(data.name);
+					c.name = data.name;
+					$("#race").val(data.race);
+					$("#race").change();
+					$("#racialAbilityBonus").val(data.racialAbilityBonus);
+					$("#claz").val(data.claz);
+					$("#claz").change();
+					$("#clazAbilityBonus").val(data.clazAbilityBonus);					
+					$("#level").val(data.level);
+					$("#level").change();
+					$("#armorType").val(data.armorType);
+					c.armorType = data.armorType;
+					$("#shield").val(data.hasShield ? "1" : "0");
+					c.hasShield = data.hasShield;
+					resetAbilityScores([data.abilityScores.STRENGTH, data.abilityScores.CONSTITUTION, 
+						data.abilityScores.DEXTERITY, data.abilityScores.INTELLIGENCE, 
+						data.abilityScores.WISDOM, data.abilityScores.CHARISMA]);
+					updateAbilityScores();
+					updateCharacterSheet();
+				}
+			};  
+			r.readAsText(file);
+		} else {
+			alert("Failed to load file.");
+		}
+	});
+
+	$("#printLink").click(function(event) {
+		event.preventDefault();
+		var options = { 
+			mode: 'iframe', 
+			popClose: true
+        };
+        $('#characterSheet').printArea(options);
+	});
+	
+	$("#actions").dialog({
+		position: { my: "right top", at: "right top", of: $("body") },
+		width: '400px'
+	});
+	
+});
+
+</script>	
+
+<div id="actions" title="Actions">
+	<div id="abilityScoreWorksheet">
+		<label>Edit Base Ability Scores</label><br />
+		<select id="ability1"></select>
+		<select id="ability2"></select>
+		<select id="ability3"></select>
+		<select id="ability4"></select>
+		<select id="ability5"></select>
+		<select id="ability6"></select>
+		<br />
+		<input type="text" id="score1" class="number" />
+		<input type="text" id="score2" class="number" />	
+		<input type="text" id="score3" class="number" />
+		<input type="text" id="score5" class="number" />
+		<input type="text" id="score4" class="number" />
+		<input type="text" id="score6" class="number" />
+		<br />
+		<a href="#" id="resetScores">Reset Scores</a>&nbsp;<a href="#" id="rollScores">Roll Scores</a>
+		<label style="float: right;text-align: right;">Cost: <span id="scoreCost">0/28</span></label>
+	</div>
+	<a id="printLink" href="#">Print Character</a>&nbsp;<a id="downloadLink" href="#" download="">Download Character</a><br /><br />
+	<label for="fileUpload">Upload Character</label><input type="file" id="fileUpload" />	
+
+</div>
+
+<div id="characterSheet">
+	<h1>13th Age Character Sheet</h1>
+
+	<div id="characterHeader">
+		<label for="name" class="left">Name&nbsp;&nbsp;<input type="text" id="name" value="" /></label>		
+		<div class="right">
+			<label for="race">Race</label>
+			<select id="race"><option value="">-Select Race-</option></select>
+			<select id="racialAbilityBonus" disabled="disabled"><option value="">-Select Ability-</option></select>	
+		</div>
+		<br />
+		<label for="level" class="left">Level <input type="text" id="level" value="1" /></label>
+		<div class="right">
+			<label for="claz">Class</label>
+			<select id="claz"><option value="">-Select Class-</option></select>
+			<select id="clazAbilityBonus" disabled="disabled"><option value="">-Select Ability-</option></select>
+		</div>
+		<br />
+		<label class="left">&nbsp;</label>
+		<div class="right">
+			<label for="armorType">Armor</label>
+			<select id="armorType">
+				<option value="0">None</option>
+				<option value="1">Light</option>
+				<option value="2">Heavy</option>
+			</select>
+			<select id="shield">
+				<option value="0">No Shield</option>
+				<option value="1">Shield</option>
+			</select>
+		</div>
+	</div>
+	
+	<div id="characterStats">
+		<table id="abilityScores">
+		<tr>
+			<th>Abilities</th>
+			<th>STR</th>
+			<th>CON</th>
+			<th>DEX</th>
+			<th>INT</th>
+			<th>WIS</th>
+			<th>CHA</th>
+		</tr>
+		<tr>
+			<th>Score</th>
+			<td id="scoreSTR">&nbsp;</td>
+			<td id="scoreCON">&nbsp;</td>
+			<td id="scoreDEX">&nbsp;</td>
+			<td id="scoreINT">&nbsp;</td>
+			<td id="scoreWIS">&nbsp;</td>
+			<td id="scoreCHA">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Modifier</th>
+			<td id="modSTR">&nbsp;</td>
+			<td id="modCON">&nbsp;</td>
+			<td id="modDEX">&nbsp;</td>
+			<td id="modINT">&nbsp;</td>
+			<td id="modWIS">&nbsp;</td>
+			<td id="modCHA">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Mod + Lvl</th>
+			<td id="mod2STR">&nbsp;</td>
+			<td id="mod2CON">&nbsp;</td>
+			<td id="mod2DEX">&nbsp;</td>
+			<td id="mod2INT">&nbsp;</td>
+			<td id="mod2WIS">&nbsp;</td>
+			<td id="mod2CHA">&nbsp;</td>
+		</tr>	
+		</table>
+
+		<div id="defenseStats">
+			<label>Defense</label><br />
+			<label for="ac">AC</label><input type="text" id="ac" value="" class="number" readonly="readonly" /><br />
+			<label for="pd">PD</label><input type="text" id="pd" value="" class="number" readonly="readonly" /><br />
+			<label for="md">MD</label><input type="text" id="md" value="" class="number" readonly="readonly" /><br />
+		</div>
+	
+		<table id="attackStats">
+			<tr>
+				<th></th>
+				<th>Attack</th>
+				<th>Hit</th>
+				<th>Miss</th>
+			</tr>
+			<tr>
+				<th>Melee</th>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>				
+			</tr>
+			<tr>
+				<th>Ranged</th>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>				
+			</tr>
+			<tr>
+				<th>Penalty</th>
+				<td id="attackPenalty">&nbsp;</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	
+		<table id="stats">
+			<tr>
+				<th></th>
+				<th>Now</th>
+				<th>Max</th>
+			</tr>
+			<tr>
+				<th>Hit<br />Points</th>
+				<td>&nbsp;</td>
+				<td id="hp">&nbsp;</td>
+			</tr>
+			<tr>
+				<th>Recoveries</th>
+				<td>&nbsp;</td>
+				<td id="recoveries">&nbsp;</td>
+			</tr>
+			<tr>
+				<th>Recovery<br />Roll</th>
+				<td id="recoveryRoll" colspan="2">&nbsp;</td>
+			</tr>
+		</table>
+	
+	</div>
+	
+	<div id="characterDetails">
+		<span id="unique" style="height: 130px">
+			<label>One Unique Thing</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="racialPower" style="height: 130px">
+			<label>Racial Power</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="icons" style="height: 130px">
+			<label>Icon Relationships</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="backgrounds"  style="height: 320px">
+			<label>Backgrounds</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="powersAndSpells" style="height: 320px">
+			<label>Powers &amp; Spells</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="magicItems" style="height: 320px">
+			<label>Magic Items</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="talents"  style="height: 160px">
+			<label>Talents</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="feats" style="height: 320px">
+			<label id="featCount">Feats (A: 1 C: 0 E: 0)</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>
+		<span id="equipment" style="height: 320px">
+			<label>Equipment</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>		
+		<span id="classFeatures" style="height: 140px; margin-top: -158px;">
+			<label>Class Features</label>
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+			<input type="text" />
+		</span>		
+	</div>
+</div>
+	
+</body>
+</html>
