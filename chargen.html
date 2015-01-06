@@ -39,24 +39,20 @@ function updateCharacterSheet() {
 	
 		var meleeAttack = claz.attack[0];
 		if (Array.isArray(meleeAttack)) {
-			// TODO: use the higher modifier
-			meleeAttack = meleeAttack[0];
+			meleeAttack = c.getHighestModifier(meleeAttack);
 		}
 		var meleeDmg = claz.damage[0];
 		if (Array.isArray(meleeDmg)) {
-			// TODO: use appropriate modifier
-			meleeDmg = meleeDmg[0];
+			meleeDmg = c.getHighestModifier(meleeDmg);
 		}
 	
 		var rangedAttack = claz.attack[1];
 		if (Array.isArray(rangedAttack)) {
-			// TODO: use the higher modifier
-			rangedAttack = rangedAttack[0];
+			rangedAttack = c.getHighestModifier(rangedAttack);
 		}
 		var rangedDmg = claz.damage[1];
 		if (Array.isArray(rangedDmg)) {
-			// TODO: use appropriate modifier
-			rangedDmg = rangedDmg[0];
+			rangedDmg = c.getHighestModifier(rangedDmg);
 		}
 	
 		$("#meleeAttack").html(fmtMod(c.modifiers[meleeAttack] + c.level) + " vs AC");
@@ -75,10 +71,9 @@ function updateCharacterSheet() {
 	}
 	$("#attackPenalty").html(c.attackPenalty);
 
-
 	$("#recoveries").html(c.recoveries);
 	var m = c.modifiers.CONSTITUTION;
-	$("#recoveryRoll").html(c.level + "d" + c.recoveryDice + fmod(m));
+	$("#recoveryRoll").html(c.level + "d" + c.recoveryDice + fmtMod(m));
 	
 	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
 	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");

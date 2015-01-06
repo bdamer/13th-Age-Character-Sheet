@@ -188,3 +188,16 @@ Character.prototype.getClazFeatures = function() {
 Character.prototype.getDamageMultiplier = function() {
 	return Math.ceil(this.level / 4);
 };
+
+Character.prototype.getHighestModifier = function(attributes) {
+	var best = -1;
+	var val = -100;
+	for (var i in attributes) {
+		var cur = this.modifiers[attributes[i]];
+		if (cur > val) {
+			val = cur;
+			best = i;
+		}
+	}
+	return attributes[best];
+};

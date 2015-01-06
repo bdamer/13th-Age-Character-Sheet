@@ -23,9 +23,18 @@
          "STRENGTH",
          "CONSTITUTION"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "BARD":{
       "label":"Bard",
@@ -51,9 +60,24 @@
          "DEXTERITY",
          "CHARISMA"
       ],
-	  "attack": [ ["STRENGTH","DEXTERITY"], "DEXTERITY" ],
-	  "damage":	[ ["STRENGTH","DEXTERITY"], "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         [
+            "STRENGTH",
+            "DEXTERITY"
+         ],
+         "DEXTERITY"
+      ],
+      "damage":[
+         [
+            "STRENGTH",
+            "DEXTERITY"
+         ],
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "CHAOS_MAGE":{
       "label":"Chaos Mage",
@@ -79,9 +103,18 @@
          "INTELLIGENCE",
          "CHARISMA"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 0, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         0,
+         0
+      ]
    },
    "CLERIC":{
       "label":"Cleric",
@@ -107,9 +140,18 @@
          "STRENGTH",
          "WISDOM"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "COMMANDER":{
       "label":"Commander",
@@ -135,9 +177,18 @@
          "STRENGTH",
          "CHARISMA"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "DRUID":{
       "label":"Druid",
@@ -160,13 +211,28 @@
       "recoveries":8,
       "recoveryDice":6,
       "bonus":[
-		 "STRENGTH",
+         "STRENGTH",
          "DEXTERITY",
          "WISDOM"
       ],
-	  "attack": [ ["STRENGTH", "DEXTERITY"], "DEXTERITY" ],
-	  "damage":	[ ["STRENGTH", "DEXTERITY"], "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         [
+            "STRENGTH",
+            "DEXTERITY"
+         ],
+         "DEXTERITY"
+      ],
+      "damage":[
+         [
+            "STRENGTH",
+            "DEXTERITY"
+         ],
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "FIGHTER":{
       "label":"Fighter",
@@ -192,9 +258,18 @@
          "STRENGTH",
          "CONSTITUTION"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "MONK":{
       "label":"Monk",
@@ -221,9 +296,18 @@
          "DEXTERITY",
          "WISDOM"
       ],
-	  "attack": [ "DEXTERITY", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "DEXTERITY",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "NECROMANCER":{
       "label":"Necromancer",
@@ -249,9 +333,18 @@
          "INTELLIGENCE",
          "CHARISMA"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 0, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         0,
+         0
+      ]
    },
    "OCCULTIST":{
       "label":"Occultist",
@@ -277,9 +370,18 @@
          "INTELLIGENCE",
          "WISDOM"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "PALADIN":{
       "label":"Paladin",
@@ -305,9 +407,18 @@
          "STRENGTH",
          "CHARISMA"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "RANGER":{
       "label":"Ranger",
@@ -334,9 +445,21 @@
          "DEXTERITY",
          "WISDOM"
       ],
-	  "attack": [ ["STRENGTH","DEXTERITY"], "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 1 ]
+      "attack":[
+         [
+            "STRENGTH",
+            "DEXTERITY"
+         ],
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         1
+      ]
    },
    "ROGUE":{
       "label":"Rogue",
@@ -362,9 +485,18 @@
          "DEXTERITY",
          "CHARISMA"
       ],
-	  "attack": [ "DEXTERITY", "DEXTERITY" ],
-	  "damage":	[ "DEXTERITY", "DEXTERITY" ],
-	  "miss": [ 1, 1 ]
+      "attack":[
+         "DEXTERITY",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "DEXTERITY",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         1
+      ]
    },
    "SORCERER":{
       "label":"Sorcerer",
@@ -390,9 +522,18 @@
          "CHARISMA",
          "CONSTITUTION"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 1, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         1,
+         0
+      ]
    },
    "WIZARD":{
       "label":"Wizard",
@@ -418,8 +559,17 @@
          "INTELLIGENCE",
          "WISDOM"
       ],
-	  "attack": [ "STRENGTH", "DEXTERITY" ],
-	  "damage":	[ "STRENGTH", "DEXTERITY" ],
-	  "miss": [ 0, 0 ]
+      "attack":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "damage":[
+         "STRENGTH",
+         "DEXTERITY"
+      ],
+      "miss":[
+         0,
+         0
+      ]
    }
 }
