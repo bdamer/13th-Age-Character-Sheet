@@ -4,9 +4,7 @@
 	<meta charset="UTF-8">
 	<title>13th Age Character Sheet</title>
 	<link href="style.css" type="text/css" rel="stylesheet" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script type="text/javascript" src="jquery.PrintArea.js"></script>
 	<script type="text/javascript" src="character.js"></script>
  </head>
@@ -16,28 +14,95 @@
 
 var c = new Character();
 
+function fmtMod(mod) {
+	return mod >= 0 ? '+' + mod : mod;
+}
+
 function updateCharacterSheet() {
 	c.computeStats();
 		
 	for (var i in DATA.ABILITIES) {
 		$("#score" + DATA.ABILITIES[i].label).html(c.getAbilityScoreTotal(i));
 		var m = c.modifiers[i];
-		$("#mod" + DATA.ABILITIES[i].label).html(m > 0 ? '+' + m : m);
+		$("#mod" + DATA.ABILITIES[i].label).html(fmtMod(m));
 		m = c.modifiers[i] + c.level;
-		$("#mod2" + DATA.ABILITIES[i].label).html(m > 0 ? '+' + m : m);	
+		$("#mod2" + DATA.ABILITIES[i].label).html(fmtMod(m));	
 	}
 
-	$("#ac").val(c.ac);
-	$("#pd").val(c.pd);
-	$("#md").val(c.md);
+	$("#ac").html(c.ac);
+	$("#pd").html(c.pd);
+	$("#md").html(c.md);
 	$("#hp").html(c.hp);	
+
+	if (c.claz) {
+		var claz = DATA.CLASSES[c.claz];
+	
+		var meleeAttack = claz.attack[0];
+		if (Array.isArray(meleeAttack)) {
+			// TODO: use the higher modifier
+			meleeAttack = meleeAttack[0];
+		}
+		var meleeDmg = claz.damage[0];
+		if (Array.isArray(meleeDmg)) {
+			// TODO: use appropriate modifier
+			meleeDmg = meleeDmg[0];
+		}
+	
+		var rangedAttack = claz.attack[1];
+		if (Array.isArray(rangedAttack)) {
+			// TODO: use the higher modifier
+			rangedAttack = rangedAttack[0];
+		}
+		var rangedDmg = claz.damage[1];
+		if (Array.isArray(rangedDmg)) {
+			// TODO: use appropriate modifier
+			rangedDmg = rangedDmg[0];
+		}
+	
+		$("#meleeAttack").html(fmtMod(c.modifiers[meleeAttack] + c.level) + " vs AC");
+		$("#meleeHit").html(c.level + "dW" + fmtMod(c.modifiers[meleeDmg] * c.getDamageMultiplier()));
+		$("#meleeMiss").html(claz.miss[0] * c.level);
+		$("#rangedAttack").html(fmtMod(c.modifiers[rangedAttack] + c.level) + " vs AC");
+		$("#rangedHit").html(c.level + "dW" + fmtMod(c.modifiers[rangedDmg] * c.getDamageMultiplier()));
+		$("#rangedMiss").html(claz.miss[1] * c.level);	
+	} else {
+		$("#meleeAttack").html("&nbsp;");
+		$("#meleeHit").html("&nbsp;");
+		$("#meleeMiss").html("0");
+		$("#rangedAttack").html("&nbsp;");
+		$("#rangedHit").html("&nbsp;");
+		$("#rangedMiss").html("0");
+	}
 	$("#attackPenalty").html(c.attackPenalty);
+
+
 	$("#recoveries").html(c.recoveries);
 	var m = c.modifiers.CONSTITUTION;
-	$("#recoveryRoll").html(c.level + "D" + c.recoveryDice + (m >= 0 ? '+' + m : m));
+	$("#recoveryRoll").html(c.level + "d" + c.recoveryDice + fmod(m));
 	
 	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
 	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");
+	
+	var racialPowers = c.getRacialPowers();
+	$("#characterDetails #racialPower input").each(function(i, el) {
+		$(el).val(racialPowers[i] ? racialPowers[i].label : "");
+	});
+		
+	var clazFeatures = c.getClazFeatures();
+	$("#characterDetails #classFeatures input").each(function(i, el) {
+		$(el).val(clazFeatures[i] ? clazFeatures[i].label : "");
+	});
+	
+	if (c.claz) {
+		$("#characterDetails #backgrounds label").first().html("Backgrounds (" + DATA.CLASSES[c.claz].backgrounds + ")");
+	} else {
+		$("#characterDetails #backgrounds label").first().html("Backgrounds");	
+	}
+
+	var ir = c.level < 4 ? 3 : 
+			 c.level < 8 ? 4 :
+						   5;					
+	$("#characterDetails #icons label").first().html("Icon Relationships (" + ir + ")");	
 	
 	var adventurerFeats = Math.min(c.level, 4);
 	var championFeats = Math.max(Math.min(c.level - 4, 3), 0);
@@ -46,7 +111,7 @@ function updateCharacterSheet() {
 	if (c.race == 'HUMAN') {
 		adventurerFeats++;
 	}
-	$("#featCount").html('Feats (A: ' + adventurerFeats + ' C: ' + championFeats + ' E: ' + epicFeats + ')');			
+	$("#featCount").html('Feats (Adv: ' + adventurerFeats + ' Champ: ' + championFeats + ' Epic: ' + epicFeats + ')');			
 }
 
 function initialize() {
@@ -299,44 +364,45 @@ $(document).ready(function() {
         };
         $('#characterSheet').printArea(options);
 	});
-	
-	$("#actions").dialog({
-		position: { my: "right top", at: "right top", of: $("body") },
-		width: '400px'
-	});
-	
+		
 });
 
 </script>	
 
 <div id="actions" title="Actions">
+	<h1>13th Age Character Sheet</h1>
+
+	<a id="printLink" href="#">Print Character</a>&nbsp;
+	<a id="downloadLink" href="#" download="">Save Character to File...</a>&nbsp;
+	<span>Load Character from File... <input type="file" id="fileUpload" /></span>
+	
 	<div id="abilityScoreWorksheet">
 		<label>Edit Base Ability Scores</label><br />
-		<select id="ability1"></select>
-		<select id="ability2"></select>
-		<select id="ability3"></select>
-		<select id="ability4"></select>
-		<select id="ability5"></select>
-		<select id="ability6"></select>
-		<br />
-		<input type="text" id="score1" class="number" />
-		<input type="text" id="score2" class="number" />	
-		<input type="text" id="score3" class="number" />
-		<input type="text" id="score5" class="number" />
-		<input type="text" id="score4" class="number" />
-		<input type="text" id="score6" class="number" />
-		<br />
-		<a href="#" id="resetScores">Reset Scores</a>&nbsp;<a href="#" id="rollScores">Roll Scores</a>
-		<label style="float: right;text-align: right;">Cost: <span id="scoreCost">0/28</span></label>
+		<div style="float: left">
+			<select id="ability1"></select>
+			<select id="ability2"></select>
+			<select id="ability3"></select>
+			<select id="ability4"></select>
+			<select id="ability5"></select>
+			<select id="ability6"></select>
+			<br />
+			<input type="text" id="score1" class="number" />
+			<input type="text" id="score2" class="number" />	
+			<input type="text" id="score3" class="number" />
+			<input type="text" id="score5" class="number" />
+			<input type="text" id="score4" class="number" />
+			<input type="text" id="score6" class="number" />
+			Cost: <span id="scoreCost">0/28</span>
+		</div>
+		<div style="float: right">
+			<a href="#" id="resetScores">Reset Scores</a>&nbsp;<a href="#" id="rollScores">Roll Scores</a>
+		</div>
 	</div>
-	<a id="printLink" href="#">Print Character</a>&nbsp;<a id="downloadLink" href="#" download="">Download Character</a><br /><br />
-	<label for="fileUpload">Upload Character</label><input type="file" id="fileUpload" />	
 
 </div>
 
 <div id="characterSheet">
-	<h1>13th Age Character Sheet</h1>
-
+	
 	<div id="characterHeader">
 		<label for="name" class="left">Name&nbsp;&nbsp;<input type="text" id="name" value="" /></label>		
 		<div class="right">
@@ -397,7 +463,7 @@ $(document).ready(function() {
 			<td id="modCHA">&nbsp;</td>
 		</tr>
 		<tr>
-			<th>Mod + Lvl</th>
+			<th>Mod+Lvl</th>
 			<td id="mod2STR">&nbsp;</td>
 			<td id="mod2CON">&nbsp;</td>
 			<td id="mod2DEX">&nbsp;</td>
@@ -407,74 +473,85 @@ $(document).ready(function() {
 		</tr>	
 		</table>
 
-		<div id="defenseStats">
-			<label>Defense</label><br />
-			<label for="ac">AC</label><input type="text" id="ac" value="" class="number" readonly="readonly" /><br />
-			<label for="pd">PD</label><input type="text" id="pd" value="" class="number" readonly="readonly" /><br />
-			<label for="md">MD</label><input type="text" id="md" value="" class="number" readonly="readonly" /><br />
-		</div>
+		<table id="defenseStats">
+		<tr>
+			<th colspan="2">Defense</th>
+		</tr>
+		<tr>
+			<th>AC</th>
+			<td id="ac">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>PD</th>
+			<td id="pd">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>MD</th>
+			<td id="md">&nbsp;</td>
+		</tr>
+		</table>		
 	
 		<table id="attackStats">
-			<tr>
-				<th></th>
-				<th>Attack</th>
-				<th>Hit</th>
-				<th>Miss</th>
-			</tr>
-			<tr>
-				<th>Melee</th>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>				
-			</tr>
-			<tr>
-				<th>Ranged</th>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>				
-			</tr>
-			<tr>
-				<th>Penalty</th>
-				<td id="attackPenalty">&nbsp;</td>
-				<td></td>
-				<td></td>
-			</tr>
+		<tr>
+			<th style="width: 15%;"></th>
+			<th>Attack</th>
+			<th>Hit</th>
+			<th style="width: 10%;">Miss</th>
+		</tr>
+		<tr>
+			<th style="width: 15%;">Melee</th>
+			<td id="meleeAttack">&nbsp;</td>
+			<td id="meleeHit">&nbsp;</td>
+			<td id="meleeMiss" style="width: 10%;">&nbsp;</td>				
+		</tr>
+		<tr>
+			<th style="width: 15%;">Ranged</th>
+			<td id="rangedAttack">&nbsp;</td>
+			<td id="rangedHit">&nbsp;</td>
+			<td id="rangedMiss" style="width: 10%;">&nbsp;</td>				
+		</tr>
+		<tr>
+			<th style="width: 15%;">Penalty</th>
+			<td id="attackPenalty">&nbsp;</td>
+			<td style="border: none;"></td>
+			<td style="border: none;width: 10%;"></td>
+		</tr>
 		</table>
 	
 		<table id="stats">
-			<tr>
-				<th></th>
-				<th>Now</th>
-				<th>Max</th>
-			</tr>
-			<tr>
-				<th>Hit<br />Points</th>
-				<td>&nbsp;</td>
-				<td id="hp">&nbsp;</td>
-			</tr>
-			<tr>
-				<th>Recoveries</th>
-				<td>&nbsp;</td>
-				<td id="recoveries">&nbsp;</td>
-			</tr>
-			<tr>
-				<th>Recovery<br />Roll</th>
-				<td id="recoveryRoll" colspan="2">&nbsp;</td>
-			</tr>
+		<tr>
+			<th></th>
+			<th>Now</th>
+			<th>Max</th>
+		</tr>
+		<tr>
+			<th>Hit<br />Points</th>
+			<td>&nbsp;</td>
+			<td id="hp">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Recoveries</th>
+			<td>&nbsp;</td>
+			<td id="recoveries">&nbsp;</td>
+		</tr>
+		<tr>
+			<th>Recovery<br />Roll</th>
+			<td id="recoveryRoll" colspan="2">&nbsp;</td>
+		</tr>
 		</table>
 	
 	</div>
 	
 	<div id="characterDetails">
-		<span id="unique" style="height: 130px">
-			<label>One Unique Thing</label>
+		<span id="racialPower" style="height: 130px">
+			<label>Racial Power</label>
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
 		</span>
-		<span id="racialPower" style="height: 130px">
-			<label>Racial Power</label>
+		<span id="unique" style="height: 130px">
+			<label>One Unique Thing</label>
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
@@ -487,8 +564,8 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 		</span>
-		<span id="backgrounds"  style="height: 320px">
-			<label>Backgrounds</label>
+		<span id="classFeatures" style="height: 320px">
+			<label>Class Features</label>
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
@@ -500,7 +577,7 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
-		</span>
+		</span>		
 		<span id="powersAndSpells" style="height: 320px">
 			<label>Powers &amp; Spells</label>
 			<input type="text" />
@@ -529,7 +606,7 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 		</span>
-		<span id="talents"  style="height: 160px">
+		<span id="talents"  style="height: 155px">
 			<label>Talents</label>
 			<input type="text" />
 			<input type="text" />
@@ -537,8 +614,8 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 		</span>
-		<span id="feats" style="height: 320px">
-			<label id="featCount">Feats (A: 1 C: 0 E: 0)</label>
+		<span id="feats" style="height: 330px">
+			<label id="featCount">Feats (Adv: 1 Champ: 0 Epic: 0)</label>
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
@@ -551,7 +628,7 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 		</span>
-		<span id="equipment" style="height: 320px">
+		<span id="equipment" style="height: 330px">
 			<label>Equipment</label>
 			<input type="text" />
 			<input type="text" />
@@ -564,15 +641,30 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
-		</span>		
-		<span id="classFeatures" style="height: 140px; margin-top: -158px;">
-			<label>Class Features</label>
+		</span>			
+		<span id="backgrounds"  style="height: 155px; margin-top: -172px;">
+			<label>Backgrounds (8)</label>
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
-		</span>		
+			<input type="text" />
+		</span>	</div>
+
+	<div id="incrementalAdvances">
+		<b>Incremental Advances</b>
+		<div style="text-align: center">
+			<label for="feat"><input type="checkbox" id="feat" /> Feat</label>
+			<label for="skills"><input type="checkbox" id="skills" /> Skills</label>
+			<label for="hitPoints"><input type="checkbox" id="hitPoints" /> Hit Points</label>
+			<label for="extraMagicItem"><input type="checkbox" id="extraMagicItem" /> Extra Magic Item</label>
+			<input type="checkbox" id="powerOrSpell" /><input type="checkbox" id="powerOrSpell" /><input type="checkbox" id="powerOrSpell" /><input type="checkbox" id="powerOrSpell" /><label for="powerOrSpell">Power / Spell</label>
+			<br />
+			<label for="abilityScoreBonus"><input type="checkbox" id="abilityScoreBonus" /> Ability Score Bonus 4th/7th/10th (+1 to 3 abilities)</label>
+			<label for="iconRelationshipPoint"><input type="checkbox" id="iconRelationshipPoint" /> Icon Relationship Point 5th/8th</label>
+		</div>
 	</div>
+	
 </div>
 	
 </body>

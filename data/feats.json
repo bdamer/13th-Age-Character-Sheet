@@ -1,5 +1,87 @@
 {
+   "ACCESS_TO_WIZARDRY":{
+      "label":"Access to Wizardry",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "ARCANE_IMPLEMENTS":{
+      "label":"Arcane Implements",
+      "claz":[
+         "CHAOS_MAGE",
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "ARCANE_IMPLEMENTS_OCCULTIST":{
+      "label":"Arcane Implements",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "EPIC"
+      ]
+   },
+   "BARBARIAN_RAGE":{
+      "label":"Barbarian Rage",
+      "claz":[
+         "BARBARIAN"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "BARDIC_SONGS":{
+      "label":"Bardic Songs",
+      "claz":[
+         "BARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER"
+      ]
+   },
+   "BATTLE_CRIES":{
+      "label":"Battle Cries",
+      "claz":[
+         "BARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER"
+      ]
+   },
    "BEST_SHOT":{
+      "claz":[
+
+      ],
       "label":"That's your best Shot? (Racial Power)",
       "race":[
          "DWARF"
@@ -9,7 +91,35 @@
          "CHAMPION"
       ]
    },
+   "BRACERS_AS_MAGIC_ITEMS":{
+      "label":"Bracers as Magic Items",
+      "claz":[
+         "MONK"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
    "BREATH_WEAPON":{
+      "label":"Breath Weapon",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER"
+      ]
+   },
+   "BREATH_WEAPON_RACIAL":{
+      "claz":[
+
+      ],
       "label":"Breath Weapon (Racial Power)",
       "race":[
          "DRAGONIC"
@@ -19,7 +129,70 @@
          "CHAMPION"
       ]
    },
+   "CANTRIPS":{
+      "label":"Cantrips",
+      "claz":[
+         "WIZARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "CHAIN":{
+      "label":"Chain",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "CHAOS_MAGE_CATEGORIES":{
+      "label":"Chaos Mage Categories",
+      "claz":[
+         "CHAOS_MAGE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "COMMANDS_AND_COMMAND_POINTS":{
+      "label":"Commands and Command Points",
+      "claz":[
+         "COMMANDER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "COMMON_SPELL_ROSTER":{
+      "label":"Common Spell Roster",
+      "claz":[
+         "CHAOS_MAGE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
    "CONFOUNDING":{
+      "claz":[
+
+      ],
       "label":"Confounding (Racial Power)",
       "race":[
          "GNOME"
@@ -30,6 +203,9 @@
       ]
    },
    "CRUEL":{
+      "claz":[
+
+      ],
       "label":"Cruel (Racial Power)",
       "race":[
          "DARK_ELF"
@@ -40,6 +216,9 @@
       ]
    },
    "CURSE_OF_CHAOS":{
+      "claz":[
+
+      ],
       "label":"Curse of Chaos (Racial Power)",
       "race":[
          "TIEFLING"
@@ -49,7 +228,85 @@
          "CHAMPION"
       ]
    },
+   "CYCLIC_SPELLS":{
+      "label":"Cyclic Spells",
+      "claz":[
+         "WIZARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "DANCING_LIGHTS":{
+      "label":"Dancing Lights",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "DEATHS_MASTER":{
+      "label":"Death's Master",
+      "claz":[
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "DELAYED_MAGICAL_HEALING":{
+      "label":"Delayed Magical Healing",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "DIVINE_IMPLEMENTS":{
+      "label":"Divine Implements",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "DRUIDIC_SUMMONING":{
+      "label":"Druidic Summoning",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
    "ELVEN_GRACE":{
+      "claz":[
+
+      ],
       "label":"Elven Grace (Racial Power)",
       "race":[
          "WOOD_ELF"
@@ -60,6 +317,9 @@
       ]
    },
    "EVASIVE":{
+      "claz":[
+
+      ],
       "label":"Evasive (Racial Power)",
       "race":[
          "HALFLING"
@@ -69,7 +329,95 @@
          "CHAMPION"
       ]
    },
+   "EXTRA_TOUGH":{
+      "label":"Extra Tough",
+      "claz":[
+         "FIGHTER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER"
+      ]
+   },
+   "FIGHT_FROM_THE_FRONT":{
+      "label":"Fight from the Front",
+      "claz":[
+         "COMMANDER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "FOCUS_AND_SPELLCASTING":{
+      "label":"Focus and Spellcasting",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "FORMS":{
+      "label":"Forms",
+      "claz":[
+         "MONK"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "GATHER_POWER":{
+      "label":"Gather Power",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "HEAL":{
+      "label":"Heal",
+      "claz":[
+         "CLERIC"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
    "HERITAGE_OF_THE_SWORD":{
+      "claz":[
+
+      ],
       "label":"Adventurer Tier Elf Feat (Heritage of the Sword)",
       "race":[
          "DARK_ELF",
@@ -81,6 +429,9 @@
       ]
    },
    "HIGHBLOOD_TELEPORT":{
+      "claz":[
+
+      ],
       "label":"Highblood Teleport (Racial Power)",
       "race":[
          "HIGH_ELF"
@@ -91,6 +442,9 @@
       ]
    },
    "HALO":{
+      "claz":[
+
+      ],
       "label":"Halo (Racial Power)",
       "race":[
          "AASIMAR"
@@ -100,7 +454,100 @@
          "CHAMPION"
       ]
    },
+   "HIGH_WEIRDNESS":{
+      "label":"High Weirdness",
+      "claz":[
+         "CHAOS_MAGE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "INITIATE_OR_ADEPT":{
+      "label":"Initiate or Adept?",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "JAB_PUNCH_AND_KICK_ATTACKS":{
+      "label":"Jab, Punch, and Kick Attacks",
+      "claz":[
+         "MONK"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "KARMIC_REBUKE":{
+      "label":"Karmic Rebuke",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "KI":{
+      "label":"Ki",
+      "claz":[
+         "MONK"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "MELEE_ATTACK_STRENGTH_OR_SPEED":{
+      "label":"Melee Attack: Strength or Speed",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "MOMENTUM":{
+      "label":"Momentum",
+      "claz":[
+         "ROGUE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
    "MINOR_ILLUSIONS":{
+      "claz":[
+
+      ],
       "label":"Minor Illusions (Racial Power)",
       "race":[
          "GNOME"
@@ -109,17 +556,48 @@
          "RACIAL"
       ]
    },
+   "NATURE_TALKING":{
+      "label":"Nature Talking",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER"
+      ]
+   },
    "NEVER_SAY_DIE":{
+      "claz":[
+
+      ],
       "label":"Never Say Die (Racial Power)",
       "race":[
          "FORGEBORN"
       ],
       "level":[
          "RACIAL",
-		 "CHAMPION"
+         "CHAMPION"
+      ]
+   },
+   "NOT_A_RITUAL_CASTER":{
+      "label":"Not a Ritual Caster",
+      "claz":[
+         "CHAOS_MAGE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
       ]
    },
    "LETHAL":{
+      "claz":[
+
+      ],
       "label":"Lethal (Racial Power)",
       "race":[
          "HALF_ORC"
@@ -129,7 +607,22 @@
          "CHAMPION"
       ]
    },
+   "OVERWORLD_ADVANTAGE":{
+      "label":"Overworld Advantage",
+      "claz":[
+         "WIZARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
    "QUICK_TO_FIGHT":{
+      "claz":[
+
+      ],
       "label":"Quick to Fight (Racial Power)",
       "race":[
          "HUMAN"
@@ -139,7 +632,105 @@
          "CHAMPION"
       ]
    },
+   "RANDOM_ENERGY":{
+      "label":"Random Energy",
+      "claz":[
+         "SORCERER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "REBUKE":{
+      "label":"Rebuke",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "RITUAL_MAGIC_CLERIC":{
+      "label":"Ritual Magic",
+      "claz":[
+         "CLERIC",
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "RITUAL_MAGIC_WIZARD":{
+      "label":"Ritual Magic",
+      "claz":[
+         "WIZARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "CHAMPION"
+      ]
+   },
+   "SMITE_EVIL":{
+      "label":"Smite Evil",
+      "claz":[
+         "PALADIN"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "SNEAK_ATTACK":{
+      "label":"Sneak Attack",
+      "claz":[
+         "ROGUE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "SUMMONING":{
+      "label":"Summoning",
+      "claz":[
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
    "SURPRISING":{
+      "claz":[
+
+      ],
       "label":"Surprising (Racial Power)",
       "race":[
          "HALF_ELF"
@@ -147,6 +738,168 @@
       "level":[
          "RACIAL",
          "CHAMPION"
+      ]
+   },
+   "SPELLS":{
+      "label":"Spells",
+      "claz":[
+         "BARD"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "SPELL_CHOICES":{
+      "label":"Spell Choices",
+      "claz":[
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "SPELL_CHOICES_AND_FLEXIBLE_RECHARGE":{
+      "label":"Spell Choices and Flexible Recharge",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "SPELL_DETERMINATION":{
+      "label":"Spell Determination",
+      "claz":[
+         "CHAOS_MAGE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "TACTICS":{
+      "label":"Tactics",
+      "claz":[
+         "COMMANDER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "THREATENING":{
+      "label":"Threatening",
+      "claz":[
+         "FIGHTER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "TRAP_SENSE":{
+      "label":"Trap Sense",
+      "claz":[
+         "ROGUE"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "TWO_WEAPON_FIGHTING":{
+      "label":"Two Weapon Fighting",
+      "claz":[
+         "MONK"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "UNIQUENESS":{
+      "label":"Uniqueness",
+      "claz":[
+         "OCCULTIST"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
+      ]
+   },
+   "WASTING_AWAY":{
+      "label":"Wasting Away",
+      "claz":[
+         "NECROMANCER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "WEIGH_THE_ODDS":{
+      "label":"Weigh the Odds",
+      "claz":[
+         "COMMANDER"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS",
+         "ADVENTURER",
+         "CHAMPION",
+         "EPIC"
+      ]
+   },
+   "WILDERNESS_SURVIVAL":{
+      "label":"Wilderness Survival",
+      "claz":[
+         "DRUID"
+      ],
+      "race":[
+
+      ],
+      "level":[
+         "CLASS"
       ]
    }
 }

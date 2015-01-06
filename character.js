@@ -24,13 +24,6 @@
  *	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
-TODO:
-- Monk gets 1 extra ability +2
-- Spell and Ability counts
-- Ability increases [Level 4/7/10]
-- Damage bonus
-*/
 DATA = {
 	BASE: 'data/',
 	HP_PROGRESSION: [0, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24],
@@ -57,6 +50,24 @@ DATA = {
 			DATA.FEATS = data;		
 		});	
 		return $.when(d1, d2, d3);
+	},
+	
+	filterFeats: function(claz, race, level) {
+		var res = [];
+		for (var i in DATA.FEATS) {
+			var f = DATA.FEATS[i];			
+			if (claz && (-1 == $.inArray(claz, f.claz))) {
+				continue;	// class requirement wasn't met
+			}
+			if (race && (-1 == $.inArray(race, f.race))) {
+				continue;	// race requirement wasn't met
+			}
+			if (level && (-1 == $.inArray(level, f.level))) {
+				continue;	// level requirement wasn't met
+			}
+			res.push(f);
+		}
+		return res;
 	}
 };
 
@@ -164,4 +175,16 @@ Character.prototype.computeStats = function() {
 	this.ac += this.middleMod(DATA.AC_MOD) + this.level;
 	this.pd += this.middleMod(DATA.PD_MOD) + this.level;
 	this.md += this.middleMod(DATA.MD_MOD) + this.level;
+};
+
+Character.prototype.getRacialPowers = function() {
+	return this.race ? DATA.filterFeats(null, this.race, 'RACIAL') : [];
+};
+
+Character.prototype.getClazFeatures = function() {
+	return this.claz ? DATA.filterFeats(this.claz, null, 'CLASS') : [];
+};
+
+Character.prototype.getDamageMultiplier = function() {
+	return Math.ceil(this.level / 4);
 };

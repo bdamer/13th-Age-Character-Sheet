@@ -6,9 +6,6 @@ body {
 	margin: 0;
 }
 
-table th {
-}
-
 table td {
 	background-color: #ffffff;
 	border: 1pt grey solid;
@@ -20,6 +17,7 @@ input, select {
 
 input.number {
 	width: 20pt;
+	text-align: center;
 }
 
 .warn {
@@ -38,17 +36,12 @@ input.number {
 div#characterSheet {
 	margin-left: auto;
 	margin-right: auto;
-	width: 900px;
+	width: 950px;
 	height: 1120px;
 	background-color: #ffffff;
 	padding: 5pt;
 	padding-left: 10pt;
 	padding-right: 10pt;
-}
-
-div#characterSheet h1 {
-	text-align: center;
-	border-bottom: 1px solid #000000;
 }
 
 div#characterHeader {
@@ -78,7 +71,7 @@ div#characterStats {
 table#abilityScores {
 	float: left;
 	display: inline;
-	width: 30%;
+	width: 33%;
 }
 
 div#characterStats td, div#characterStats input {
@@ -89,23 +82,20 @@ table#abilityScores #mod2DEX {
 	border: 2pt black solid;
 }
 
-div#defenseStats {
-	padding-left: 15px;
+table#defenseStats {
 	float: left;
 	display: inline;
 	width: 8%;
-	padding-top: 2.5pt;
 }
 
-div#defenseStats label {
-	padding-right: 10px;
-	font-weight: bold;
+table#defenseStats th, table#defenseStats td {
+	width: 50%;
 }
 
 table#attackStats {
 	float: left;
 	display: inline;
-	width: 30%;
+	width: 32%;
 	padding-top: 2.5pt;
 }
 
@@ -116,7 +106,7 @@ table#attackStats th, table#attackStats td {
 table#stats {
 	float: left;
 	display: inline;
-	width: 30%;
+	width: 25%;
 }
 
 table#stats th {
@@ -145,24 +135,62 @@ div#characterDetails input {
 	border-bottom: 1px dotted #dddddd;	
 }
 
-div#abilityScoreWorksheet input[type="text"], div#abilityScoreWorksheet select{
-	margin: 0;
-	padding: 0;
-	font-size: 10pt;
-	width: 55px;
-	text-align: center;
+div#incrementalAdvances {
+	padding: 3pt;
 }
 
-div#actions a {
+div#actions {
+	margin-left: auto;
+	margin-right: auto;
+	width: 950px;
+	background-color: #eeeeee;
+	padding: 10pt;
+}
+
+div#actions h1 {
+	text-align: center;
+	border-bottom: 1px solid #000000;
+}
+
+div#actions a  {
 	border: 1px solid #bbbbbb;
+	background-color: #cccccc;
+	padding: 3pt;
+	padding-top: 8pt;
+	padding-bottom: 6pt;
+	margin-top: 2pt;
+	display: inline-block;
+	text-decoration: none;
+	color: #000000;
+}
+
+div#actions span {
+	border: 1px solid #bbbbbb;
+	background-color: #cccccc;
 	padding: 3pt;
 	margin-top: 2pt;
 	display: inline-block;
 	text-decoration: none;
+	color: #000000;
 }
 
-div#actions label {
-	padding-top: 10px;
-	padding-bottom: 10px;
+div#abilityScoreWorksheet {
+	margin-top: 20px;
+	height: 64px;
+}
+
+div#abilityScoreWorksheet input[type="text"] {
+	width: 56px;
+}
+
+div#abilityScoreWorksheet select{
+	margin: 0;
+	padding: 0;
+	font-size: 10pt;
+	width: 60px;
+	text-align: center;
+}
+
+div#abilityScoreWorksheet label {
 	font-weight: bold;
 }
