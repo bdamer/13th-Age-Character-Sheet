@@ -74,10 +74,7 @@ function updateCharacterSheet() {
 	$("#recoveries").html(c.recoveries);
 	var m = c.modifiers.CONSTITUTION;
 	$("#recoveryRoll").html(c.level + "d" + c.recoveryDice + fmtMod(m));
-	
-	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
-	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");
-	
+		
 	var racialPowers = c.getRacialPowers();
 	$("#characterDetails #racialPower input").each(function(i, el) {
 		$(el).val(racialPowers[i] ? racialPowers[i].label : "");
@@ -107,6 +104,11 @@ function updateCharacterSheet() {
 		adventurerFeats++;
 	}
 	$("#featCount").html('Feats (Adv: ' + adventurerFeats + ' Champ: ' + championFeats + ' Epic: ' + epicFeats + ')');			
+
+	
+	
+	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
+	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");	
 }
 
 function initialize() {
@@ -313,6 +315,17 @@ $(document).ready(function() {
 		updateCharacterSheet();		
 	});	
 
+	$("#characterDetails input").change(function() {
+		$("#characterDetails span").each(function(i, el) {
+			var details = [];
+			$("#characterDetails #" + el.id + " input").each(function(j, el2) {
+				details.push($(el2).val());
+			});			
+			c.details[el.id] = details;
+		});
+		updateCharacterSheet();
+	});
+	
 	$("#fileUpload").change(function(ev) {
 		var file = ev.target.files[0];
 		if (file) {
@@ -325,15 +338,24 @@ $(document).ready(function() {
 				$("#race").val(data.race);
 				$("#race").change();
 				$("#racialAbilityBonus").val(data.racialAbilityBonus);
+				$("#racialAbilityBonus").change();
 				$("#claz").val(data.claz);
 				$("#claz").change();
-				$("#clazAbilityBonus").val(data.clazAbilityBonus);					
+				$("#clazAbilityBonus").val(data.clazAbilityBonus);
+				$("#clazAbilityBonus").change();				
 				$("#level").val(data.level);
 				$("#level").change();
 				$("#armorType").val(data.armorType);
 				c.armorType = data.armorType;
 				$("#shield").val(data.hasShield ? "1" : "0");
 				c.hasShield = data.hasShield;
+				
+				for (var i in data.details) {
+					$('#characterDetails #' + i + ' input').each(function(j, el) {
+						$(el).val(data.details[i][j]);
+					});
+				}
+				
 				resetAbilityScores([data.abilityScores.STRENGTH, data.abilityScores.CONSTITUTION, 
 					data.abilityScores.DEXTERITY, data.abilityScores.INTELLIGENCE, 
 					data.abilityScores.WISDOM, data.abilityScores.CHARISMA]);
@@ -640,7 +662,8 @@ $(document).ready(function() {
 			<input type="text" />
 			<input type="text" />
 			<input type="text" />
-		</span>	</div>
+		</span>	
+	</div>
 
 	<div id="incrementalAdvances">
 		<b>Incremental Advances</b>

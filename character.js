@@ -102,6 +102,9 @@ function Character(args) {
 			this.modifiers[i] = 0;
 		}	
 	}
+	
+	// detail text fields:
+	this.details = args.details || {};
 }
 
 Character.prototype.setAbilityScore = function(ability, score) {
