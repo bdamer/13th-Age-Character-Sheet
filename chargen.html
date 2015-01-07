@@ -192,8 +192,9 @@ $(document).ready(function() {
 	DATA.load().done(initialize);
 	
 	// set up event logic
-	$("#name").change(function() {
+	$("#characterSheet #characterHeader #name").change(function() {
 		c.name = $(this).val();
+		updateCharacterSheet();
 	});
 	
 	$("#race").change(function() {
@@ -317,32 +318,27 @@ $(document).ready(function() {
 		if (file) {
 			var r = new FileReader();
 			r.onload = function(e) {
-				if (file.type != "'text/json") {
-					alert("Invalid file type: " + file.type);
-				} else {
-					var data = JSON.parse(e.target.result);
-					
-					// update spreadsheet with data from file
-					$("#name").val(data.name);
-					c.name = data.name;
-					$("#race").val(data.race);
-					$("#race").change();
-					$("#racialAbilityBonus").val(data.racialAbilityBonus);
-					$("#claz").val(data.claz);
-					$("#claz").change();
-					$("#clazAbilityBonus").val(data.clazAbilityBonus);					
-					$("#level").val(data.level);
-					$("#level").change();
-					$("#armorType").val(data.armorType);
-					c.armorType = data.armorType;
-					$("#shield").val(data.hasShield ? "1" : "0");
-					c.hasShield = data.hasShield;
-					resetAbilityScores([data.abilityScores.STRENGTH, data.abilityScores.CONSTITUTION, 
-						data.abilityScores.DEXTERITY, data.abilityScores.INTELLIGENCE, 
-						data.abilityScores.WISDOM, data.abilityScores.CHARISMA]);
-					updateAbilityScores();
-					updateCharacterSheet();
-				}
+				var data = JSON.parse(e.target.result);
+				// update spreadsheet with data from file
+				$("#name").val(data.name);
+				c.name = data.name;
+				$("#race").val(data.race);
+				$("#race").change();
+				$("#racialAbilityBonus").val(data.racialAbilityBonus);
+				$("#claz").val(data.claz);
+				$("#claz").change();
+				$("#clazAbilityBonus").val(data.clazAbilityBonus);					
+				$("#level").val(data.level);
+				$("#level").change();
+				$("#armorType").val(data.armorType);
+				c.armorType = data.armorType;
+				$("#shield").val(data.hasShield ? "1" : "0");
+				c.hasShield = data.hasShield;
+				resetAbilityScores([data.abilityScores.STRENGTH, data.abilityScores.CONSTITUTION, 
+					data.abilityScores.DEXTERITY, data.abilityScores.INTELLIGENCE, 
+					data.abilityScores.WISDOM, data.abilityScores.CHARISMA]);
+				updateAbilityScores();
+				updateCharacterSheet();
 			};  
 			r.readAsText(file);
 		} else {
