@@ -73,12 +73,13 @@ DATA = {
 
 function Character(args) {
 	args = args || {};
+	//console.log("Creating new character", args);
 
 	this.name = args.name || null;
 	this.race = args.race || null;
-	this.racialAbilityBonus = args.racialAbilityBonus || null;
+	this.racialAbilityBonus = args.racialAbilityBonus || [];
 	this.claz = args.claz || null;
-	this.clazAbilityBonus = args.clazAbilityBonus || null;
+	this.clazAbilityBonus = args.clazAbilityBonus || [];
 	this.level = args.level || 1;
 	this.initiative = args.initiative || 1;
 	this.feats = args.feats || {};
@@ -90,7 +91,7 @@ function Character(args) {
 	this.hasShield = args.hasShield || false;
 	this.recoveries = args.recoveries || 0;
 	this.recoveryDice = args.recoveryDice || 0;
-	
+
 	if (args.abilityScores) {
 		this.abilityScores = args.abilityScores;
 		this.modifiers = args.modifiers;		
@@ -114,32 +115,32 @@ Character.prototype.setAbilityScore = function(ability, score) {
 
 Character.prototype.getAbilityScoreTotal = function(ability) {
 	var res = this.abilityScores[ability];
-	if (this.racialAbilityBonus == ability) {
+	if (this.racialAbilityBonus.indexOf(ability) !== -1) {
 		res += 2;
-	} else if (this.clazAbilityBonus == ability) {
+	} else if (this.clazAbilityBonus.indexOf(ability) !== -1) {
 		res += 2;
 	}
 	return res;
 };
 
-Character.prototype.setRacialAbilityBonus = function(ability) {
-	this.racialAbilityBonus = ability;
+Character.prototype.setRacialAbilityBonus = function(abilities) {
+	this.racialAbilityBonus = abilities;
 };
 
-Character.prototype.setClazAbilityBonus = function(ability) {
-	this.clazAbilityBonus = ability;
+Character.prototype.setClazAbilityBonus = function(abilities) {
+	this.clazAbilityBonus = abilities;
 };
 
 Character.prototype.setRace = function(race) {
 	if (this.race) {		
-		this.setRacialAbilityBonus(null);
+		this.setRacialAbilityBonus([]);
 	}
 	this.race = race;
 };
 
 Character.prototype.setClaz = function(claz) {
 	if (this.claz) {
-		this.setClazAbilityBonus(null);
+		this.setClazAbilityBonus([]);
 	}
 	this.claz = claz;
 };

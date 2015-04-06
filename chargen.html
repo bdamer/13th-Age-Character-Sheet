@@ -32,7 +32,7 @@ function updateCharacterSheet() {
 	$("#ac").html(c.ac);
 	$("#pd").html(c.pd);
 	$("#md").html(c.md);
-	$("#hp").html(c.hp);	
+	$("#hp").html(c.hp);
 
 	if (c.claz) {
 		var claz = DATA.CLASSES[c.claz];
@@ -105,8 +105,6 @@ function updateCharacterSheet() {
 	}
 	$("#featCount").html('Feats (Adv: ' + adventurerFeats + ' Champ: ' + championFeats + ' Epic: ' + epicFeats + ')');			
 
-	
-	
 	$("#downloadLink").attr("href", "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(c)));
 	$("#downloadLink").attr("download", (c.name ? c.name : "nobody") + ".json");	
 }
@@ -189,6 +187,28 @@ function rollAbilityScores() {
 	}
 };
 
+function generateAbilityPermutations(abilities, count) {
+	count = count || 1;
+	var res = { };
+	for (var i = 0; i < abilities.length; i++) {
+		var key = abilities[i];
+		var val = DATA.ABILITIES[key].label;
+		if (count == 1) {
+			res[key] = val;
+		// for now, we only support count == 2
+		} else if (count == 2) {
+			for (var j = i + 1; j < abilities.length; j++) {
+				var key2 = key + "-" + abilities[j];
+				var val2 = val + "-" + DATA.ABILITIES[abilities[j]].label;
+				res[key2] = val2;
+			}			
+		} else {
+			alert("Unsupported ability count: " + count);
+		}
+	}
+	return res;
+}
+
 $(document).ready(function() {
 	// first, load external data
 	DATA.load().done(initialize);
@@ -202,14 +222,14 @@ $(document).ready(function() {
 	$("#race").change(function() {
 		var idx = $(this).val();
 		$("#racialAbilityBonus").empty();
-		$("#racialAbilityBonus").append($("<option/>").val("").text("-Select Ability-"));				
+		$("#racialAbilityBonus").append($("<option/>").val("").text("-Select Ability-"));
 		if (idx === "") {
 			$("#racialAbilityBonus").attr("disabled", "disabled");
 			c.setRace(null);
 		} else {
-			for (var i in DATA.RACES[idx].bonus) {
-				var a = DATA.RACES[idx].bonus[i];
-				$("#racialAbilityBonus").append($("<option/>").val(a).text(DATA.ABILITIES[a].label));
+			var abilities = generateAbilityPermutations(DATA.RACES[idx].bonus, DATA.RACES[idx].bonusCount);
+			for (var i in abilities) {
+				$("#racialAbilityBonus").append($("<option/>").val(i).text(abilities[i]));
 			}
 			$("#racialAbilityBonus").attr("disabled", null);
 			c.setRace(idx);
@@ -218,15 +238,21 @@ $(document).ready(function() {
 	});
 
 	$("#racialAbilityBonus").change(function() {
-		var ability = $(this).val();
-		if (ability == "") { 
-			c.setRacialAbilityBonus(null);
-		} else if (ability == c.clazAbilityBonus) {
-			alert("Please select different attributes for the racial and class bonus!");
-			$(this).val("");
-			c.setRacialAbilityBonus(null);
+		var abilities = $(this).val().split("-");
+		if (abilities[0] == "") { 
+			c.setRacialAbilityBonus([]);
 		} else {
-			c.setRacialAbilityBonus(ability);			
+			var error = false;
+			for (var i in abilities) {
+				error = error || (c.clazAbilityBonus.indexOf(abilities[i]) !== -1);
+			}
+			if (error) {
+				alert("Please select different attributes for the racial and class bonus!");
+				$(this).val("");
+				c.setRacialAbilityBonus([]);
+			} else {
+				c.setRacialAbilityBonus(abilities);			
+			}
 		}
 		updateCharacterSheet();
 	});
@@ -239,9 +265,9 @@ $(document).ready(function() {
 			$("#clazAbilityBonus").attr("disabled", "disabled");
 			c.setClaz(null);
 		} else {
-			for (var i in DATA.CLASSES[idx].bonus) {
-				var a = DATA.CLASSES[idx].bonus[i];
-				$("#clazAbilityBonus").append($("<option/>").val(a).text(DATA.ABILITIES[a].label));
+			var abilities = generateAbilityPermutations(DATA.CLASSES[idx].bonus, DATA.CLASSES[idx].bonusCount);
+			for (var i in abilities) {
+				$("#clazAbilityBonus").append($("<option/>").val(i).text(abilities[i]));
 			}
 			$("#clazAbilityBonus").attr("disabled", null);
 			c.setClaz(idx);
@@ -250,15 +276,21 @@ $(document).ready(function() {
 	});
 
 	$("#clazAbilityBonus").change(function() {
-		var ability = $(this).val();
-		if (ability == "") { 
-			c.setClazAbilityBonus(null);
-		} else if (ability == c.racialAbilityBonus) {
-			alert("Please select different attributes for the racial and class bonus!");
-			$(this).val("");
-			c.setClazAbilityBonus(null);
+		var abilities = $(this).val().split("-");
+		if (abilities[0] == "") { 
+			c.setClazAbilityBonus([]);
 		} else {
-			c.setClazAbilityBonus(ability);			
+			var error = false;
+			for (var i in abilities) {
+				error = error || (c.racialAbilityBonus.indexOf(abilities[i]) !== -1);
+			}
+			if (error) {
+				alert("Please select different attributes for the racial and class bonus!");
+				$(this).val("");
+				c.setClazAbilityBonus([]);
+			} else {
+				c.setClazAbilityBonus(abilities);			
+			}
 		}
 		updateCharacterSheet();
 	});
@@ -337,12 +369,24 @@ $(document).ready(function() {
 				c.name = data.name;
 				$("#race").val(data.race);
 				$("#race").change();
-				$("#racialAbilityBonus").val(data.racialAbilityBonus);
+
+				// Clean up and support old ability bonus format
+				data.racialAbilityBonus = data.racialAbilityBonus || [ ];
+				if (!Array.isArray(data.racialAbilityBonus)) {
+					data.racialAbilityBonus = [ data.racialAbilityBonus ];
+				}
+				$("#racialAbilityBonus").val(data.racialAbilityBonus.join("-"));
 				$("#racialAbilityBonus").change();
 				$("#claz").val(data.claz);
 				$("#claz").change();
-				$("#clazAbilityBonus").val(data.clazAbilityBonus);
-				$("#clazAbilityBonus").change();				
+
+				// Clean up and support old ability bonus format
+				data.clazAbilityBonus = data.clazAbilityBonus || [ ];
+				if (!Array.isArray(data.clazAbilityBonus)) {
+					data.clazAbilityBonus = [ data.clazAbilityBonus ];
+				}
+				$("#clazAbilityBonus").val(data.clazAbilityBonus.join("-"));
+				$("#clazAbilityBonus").change();
 				$("#level").val(data.level);
 				$("#level").change();
 				$("#armorType").val(data.armorType);

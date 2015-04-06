@@ -296,6 +296,7 @@
          "DEXTERITY",
          "WISDOM"
       ],
+	  "bonusCount":2,
       "attack":[
          "DEXTERITY",
          "DEXTERITY"
