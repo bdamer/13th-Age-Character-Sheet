@@ -82,7 +82,10 @@ function updateCharacterSheet() {
 		
 	var clazFeatures = c.getClazFeatures();
 	$("#characterDetails #classFeatures input").each(function(i, el) {
-		$(el).val(clazFeatures[i] ? clazFeatures[i].label : "");
+		if (i < 7) {
+			// reset first 7 class features, preserving remaining fields
+			$(el).val(clazFeatures[i] ? clazFeatures[i].label : "");
+		}
 	});
 	
 	if (c.claz) {
@@ -355,7 +358,6 @@ $(document).ready(function() {
 			});			
 			c.details[el.id] = details;
 		});
-		updateCharacterSheet();
 	});
 	
 	$("#fileUpload").change(function(ev) {
@@ -536,15 +538,15 @@ $(document).ready(function() {
 		</tr>
 		<tr>
 			<th>AC</th>
-			<td id="ac">&nbsp;</td>
+			<td id="ac" contenteditable="true">&nbsp;</td>
 		</tr>
 		<tr>
 			<th>PD</th>
-			<td id="pd">&nbsp;</td>
+			<td id="pd" contenteditable="true">&nbsp;</td>
 		</tr>
 		<tr>
 			<th>MD</th>
-			<td id="md">&nbsp;</td>
+			<td id="md" contenteditable="true">&nbsp;</td>
 		</tr>
 		</table>		
 	
@@ -557,21 +559,21 @@ $(document).ready(function() {
 		</tr>
 		<tr>
 			<th style="width: 15%;">Melee</th>
-			<td id="meleeAttack">&nbsp;</td>
-			<td id="meleeHit">&nbsp;</td>
-			<td id="meleeMiss" style="width: 10%;">&nbsp;</td>				
+			<td id="meleeAttack" contenteditable="true">&nbsp;</td>
+			<td id="meleeHit" contenteditable="true">&nbsp;</td>
+			<td id="meleeMiss" style="width: 10%;" contenteditable="true">&nbsp;</td>				
 		</tr>
 		<tr>
 			<th style="width: 15%;">Ranged</th>
-			<td id="rangedAttack">&nbsp;</td>
-			<td id="rangedHit">&nbsp;</td>
-			<td id="rangedMiss" style="width: 10%;">&nbsp;</td>				
+			<td id="rangedAttack" contenteditable="true">&nbsp;</td>
+			<td id="rangedHit" contenteditable="true">&nbsp;</td>
+			<td id="rangedMiss" style="width: 10%;" contenteditable="true">&nbsp;</td>				
 		</tr>
 		<tr>
 			<th style="width: 15%;">Penalty</th>
-			<td id="attackPenalty">&nbsp;</td>
-			<td style="border: none;"></td>
-			<td style="border: none;width: 10%;"></td>
+			<td id="attackPenalty" contenteditable="true">&nbsp;</td>
+			<td style="border: none;" contenteditable="true"></td>
+			<td style="border: none;width: 10%;" contenteditable="true"></td>
 		</tr>
 		</table>
 	
@@ -583,17 +585,17 @@ $(document).ready(function() {
 		</tr>
 		<tr>
 			<th>Hit<br />Points</th>
-			<td>&nbsp;</td>
-			<td id="hp">&nbsp;</td>
+			<td contenteditable="true">&nbsp;</td>
+			<td id="hp" contenteditable="true">&nbsp;</td>
 		</tr>
 		<tr>
 			<th>Recoveries</th>
-			<td>&nbsp;</td>
-			<td id="recoveries">&nbsp;</td>
+			<td contenteditable="true">&nbsp;</td>
+			<td id="recoveries" contenteditable="true">&nbsp;</td>
 		</tr>
 		<tr>
 			<th>Recovery<br />Roll</th>
-			<td id="recoveryRoll" colspan="2">&nbsp;</td>
+			<td id="recoveryRoll" colspan="2" contenteditable="true">&nbsp;</td>
 		</tr>
 		</table>
 	
