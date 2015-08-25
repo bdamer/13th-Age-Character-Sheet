@@ -94,13 +94,10 @@ function Character(args) {
 
 	if (args.abilityScores) {
 		this.abilityScores = args.abilityScores;
-		this.modifiers = args.modifiers;		
 	} else {
 		this.abilityScores = {};
-		this.modifiers = {};
 		for (var i in DATA.ABILITIES) {
 			this.abilityScores[i] = 0;
-			this.modifiers[i] = 0;
 		}	
 	}
 	
@@ -110,7 +107,6 @@ function Character(args) {
 
 Character.prototype.setAbilityScore = function(ability, score) {
 	this.abilityScores[ability] = score;
-	this.modifiers[ability] = Math.floor((this.getAbilityScoreTotal(ability) - 10) / 2);
 };
 
 Character.prototype.getAbilityScoreTotal = function(ability) {
@@ -122,6 +118,10 @@ Character.prototype.getAbilityScoreTotal = function(ability) {
 	}
 	return res;
 };
+
+Character.prototype.getAbilityModTotal = function(ability) {
+	return Math.floor((this.getAbilityScoreTotal(ability) - 10) / 2);
+}
 
 Character.prototype.setRacialAbilityBonus = function(abilities) {
 	this.racialAbilityBonus = abilities;
@@ -146,16 +146,16 @@ Character.prototype.setClaz = function(claz) {
 };
 
 Character.prototype.middleMod = function(mods) {
-	var a = this.modifiers[mods[0]];
-	var b = this.modifiers[mods[1]];
-	var c = this.modifiers[mods[2]];
+	var a = this.getAbilityModTotal(mods[0]);
+	var b = this.getAbilityModTotal(mods[1]);
+	var c = this.getAbilityModTotal(mods[2]);
 	return a + b + c - Math.max(a,b,c) - Math.min(a,b,c);
 };
 	
 Character.prototype.computeStats = function() {
 	var c = this.claz ? DATA.CLASSES[this.claz] : null;
 	if (c) {
-		this.hp = (c.baseHP + this.modifiers.CONSTITUTION) * DATA.HP_PROGRESSION[this.level];
+		this.hp = (c.baseHP + this.getAbilityModTotal('CONSTITUTION')) * DATA.HP_PROGRESSION[this.level];
 		this.ac = c.baseAC[this.armorType];
 		this.pd = c.basePD;
 		this.md = c.baseMD;
@@ -175,7 +175,7 @@ Character.prototype.computeStats = function() {
 		this.recoveryDice = 0;
 		this.attackPenalty = 0;
 	}
-	this.initiative = this.level + this.modifiers['DEXTERITY'];
+	this.initiative = this.level + this.getAbilityModTotal('DEXTERITY');
 	this.ac += this.middleMod(DATA.AC_MOD) + this.level;
 	this.pd += this.middleMod(DATA.PD_MOD) + this.level;
 	this.md += this.middleMod(DATA.MD_MOD) + this.level;
@@ -197,7 +197,7 @@ Character.prototype.getHighestModifier = function(attributes) {
 	var best = -1;
 	var val = -100;
 	for (var i in attributes) {
-		var cur = this.modifiers[attributes[i]];
+		var cur = this.getAbilityModTotal(attributes[i]);
 		if (cur > val) {
 			val = cur;
 			best = i;

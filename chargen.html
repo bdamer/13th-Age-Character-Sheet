@@ -23,9 +23,9 @@ function updateCharacterSheet() {
 		
 	for (var i in DATA.ABILITIES) {
 		$("#score" + DATA.ABILITIES[i].label).html(c.getAbilityScoreTotal(i));
-		var m = c.modifiers[i];
+		var m = c.getAbilityModTotal(i);
 		$("#mod" + DATA.ABILITIES[i].label).html(fmtMod(m));
-		m = c.modifiers[i] + c.level;
+		m += c.level;
 		$("#mod2" + DATA.ABILITIES[i].label).html(fmtMod(m));	
 	}
 
@@ -55,11 +55,11 @@ function updateCharacterSheet() {
 			rangedDmg = c.getHighestModifier(rangedDmg);
 		}
 	
-		$("#meleeAttack").html(fmtMod(c.modifiers[meleeAttack] + c.level) + " vs AC");
-		$("#meleeHit").html(c.level + "dW" + fmtMod(c.modifiers[meleeDmg] * c.getDamageMultiplier()));
+		$("#meleeAttack").html(fmtMod(c.getAbilityModTotal(meleeAttack) + c.level) + " vs AC");
+		$("#meleeHit").html(c.level + "dW" + fmtMod(c.getAbilityModTotal(meleeDmg) * c.getDamageMultiplier()));
 		$("#meleeMiss").html(claz.miss[0] * c.level);
-		$("#rangedAttack").html(fmtMod(c.modifiers[rangedAttack] + c.level) + " vs AC");
-		$("#rangedHit").html(c.level + "dW" + fmtMod(c.modifiers[rangedDmg] * c.getDamageMultiplier()));
+		$("#rangedAttack").html(fmtMod(c.getAbilityModTotal(rangedAttack) + c.level) + " vs AC");
+		$("#rangedHit").html(c.level + "dW" + fmtMod(c.getAbilityModTotal(rangedDmg) * c.getDamageMultiplier()));
 		$("#rangedMiss").html(claz.miss[1] * c.level);	
 	} else {
 		$("#meleeAttack").html("&nbsp;");
@@ -72,7 +72,7 @@ function updateCharacterSheet() {
 	$("#attackPenalty").html(c.attackPenalty);
 
 	$("#recoveries").html(c.recoveries);
-	var m = c.modifiers.CONSTITUTION;
+	var m = c.getAbilityModTotal('CONSTITUTION');
 	$("#recoveryRoll").html(c.level + "d" + c.recoveryDice + fmtMod(m));
 		
 	var racialPowers = c.getRacialPowers();
