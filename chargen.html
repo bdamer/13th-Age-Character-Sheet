@@ -131,17 +131,14 @@ function updateAbilityScores() {
 		if (isNaN(score))
 			continue;
 		
-		if (score == 18)
-			cost += 16;
-		else if (score == 17)
-			cost += 13;
-		else if (score == 16)
-			cost += 10;
-		else if (score == 15)
-			cost += 8;
-		else
+		if (score >= 17) {
+			cost += 10 + 3 * (score - 16);
+		} else if (score >= 15) {
+			cost += 6 + 2 * (score - 14);
+		} else {
 			cost += (score - 8);
-
+		}
+		
 		var ability = $("#ability" + i).val();
 		if (!ability)
 			continue;
@@ -338,8 +335,6 @@ $(document).ready(function() {
 			$(this).val(8);
 		} else if (val < 8) {
 			$(this).val(8);
-		} else if (val > 18) {
-			$(this).val(18);
 		}
 		updateAbilityScores();
 		updateCharacterSheet();		
