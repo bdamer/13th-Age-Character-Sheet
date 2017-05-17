@@ -93,5 +93,40 @@
          "STRENGTH",
          "INTELLIGENCE"
       ]
+   },
+   "CATFOLK":{
+      "label":"Catfolk",
+      "bonus":[
+         "DEXTERITY",
+         "CHARISMA"
+      ]
+   },
+   "HAGBORN":{
+      "label":"Hagborn",
+      "bonus":[
+         "WISDOM",
+         "CHARISMA"
+      ]
+   },
+   "LIZARDFOLK":{
+      "label":"Lizardfolk",
+      "bonus":[
+         "STRENGTH",
+         "CONSTITUTION"
+      ]
+   },
+   "MERFOLK":{
+      "label":"Merfolk",
+      "bonus":[
+         "CONSTITUTION",
+         "CHARISMA"
+      ]
+   },
+   "SAMSARAN":{
+      "label":"Samsaran",
+      "bonus":[
+         "INTELLIGENCE",
+         "WISDOM"
+      ]
    }
 }

@@ -129,6 +129,19 @@
          "CHAMPION"
       ]
    },
+   "CATS_LUCK":{
+      "claz":[
+
+      ],
+      "label":"Cat's Luck (Racial Power)",
+      "race":[
+         "CATFOLK"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
    "CANTRIPS":{
       "label":"Cantrips",
       "claz":[
@@ -163,6 +176,19 @@
       ],
       "level":[
          "CLASS"
+      ]
+   },
+   "CLAWS_AND_JAWS":{
+      "claz":[
+
+      ],
+      "label":"Claws and Jaws (Racial Power)",
+      "race":[
+         "LIZARDFOLK"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
       ]
    },
    "COMMANDS_AND_COMMAND_POINTS":{
@@ -303,6 +329,19 @@
          "CLASS"
       ]
    },
+   "ELDRITCH_FOG":{
+      "claz":[
+
+      ],
+      "label":"Eldritch Fog (Racial Power)",
+      "race":[
+         "HAGBORN"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
    "ELVEN_GRACE":{
       "claz":[
 
@@ -329,6 +368,19 @@
          "CHAMPION"
       ]
    },
+   "EVIL_EYE":{
+      "claz":[
+
+      ],
+      "label":"Evil Eye (Racial Power)",
+      "race":[
+         "HAGBORN"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
+      ]
+   },
    "EXTRA_TOUGH":{
       "label":"Extra Tough",
       "claz":[
@@ -339,6 +391,18 @@
       ],
       "level":[
          "CLASS",
+         "ADVENTURER"
+      ]
+   },
+   "FELINE_GRACE":{
+      "claz":[
+
+      ],
+      "label":"Adventurer Tier Catfolk Feat (Feline Grace)",
+      "race":[
+         "CATFOLK"
+      ],
+      "level":[
          "ADVENTURER"
       ]
    },
@@ -355,6 +419,19 @@
          "ADVENTURER",
          "CHAMPION",
          "EPIC"
+      ]
+   },
+   "FLASHES_OF_PAST_LIVES":{
+      "claz":[
+
+      ],
+      "label":"Flashes Of Past Lives (Racial Power)",
+      "race":[
+         "SAMSARAN"
+      ],
+      "level":[
+         "RACIAL",
+         "CHAMPION"
       ]
    },
    "FOCUS_AND_SPELLCASTING":{
@@ -520,6 +597,18 @@
          "EPIC"
       ]
    },
+   "MAGICAL_AMPHIBIAN":{
+      "claz":[
+
+      ],
+      "label":"Magical Amphibian",
+      "race":[
+         "MERFOLK"
+      ],
+      "level":[
+         "RACIAL"
+      ]
+   },
    "MELEE_ATTACK_STRENGTH_OR_SPEED":{
       "label":"Melee Attack: Strength or Speed",
       "claz":[
@@ -679,6 +768,19 @@
       ],
       "level":[
          "CLASS",
+         "CHAMPION"
+      ]
+   },
+   "SIREN_SONG":{
+      "claz":[
+
+      ],
+      "label":"Siren Song (Racial Power)",
+      "race":[
+         "MERFOLK"
+      ],
+      "level":[
+         "RACIAL",
          "CHAMPION"
       ]
    },
